@@ -1,0 +1,24 @@
+name: Write PWA PNG icons
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  icons:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode PNG icons
+        run: python3 scripts/write-icons.py
+      - name: Commit if needed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apple-touch-icon.png assets/icons/*.png
+          if git diff --cached --quiet; then
+            echo "icons already present"
+          else
+            git commit -m "Add PNG icons for iOS Add to Home Screen"
+            git push
+          fi
