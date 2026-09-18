@@ -1,9 +1,11 @@
-const CACHE = "yatra-pwa-v1";
+const CACHE = "yatra-pwa-v2";
 const PRECACHE = [
   "./",
   "./index.html",
   "./css/app.css",
   "./js/app.js",
+  "./js/core.js",
+  "./js/screens.js",
   "./data/app.json",
   "./manifest.webmanifest",
   "./assets/yatra-logo.svg",
