@@ -1,9 +1,7 @@
 import {
-  ICONS, store, booking, requireAuth, navBar, iconBtn,
-  productIcon, screenClass, INR,
+  ICONS, DIYA_AVATAR, store, booking, requireAuth, navBar, iconBtn,
+  productIcon, screenClass, INR, airlineMark,
 } from './core.js';
-
-/* ---------- screens ---------- */
 
 export function viewLogin() {
   return `<div class="${screenClass()}">
@@ -58,56 +56,92 @@ export function viewOtp() {
 }
 
 export function homeHead() {
+  const n = store.data.home.alertCount || "5+";
   return `<div class="home-head">
     <img class="logo" src="assets/yatra-logo.svg" alt="Yatra" data-act="reset-logo" />
     <div class="home-tools">
       ${iconBtn("cal", "go:#/trips", "Trips")}
       ${iconBtn("wallet", "go:#/wallet", "Wallet")}
-      ${iconBtn("bell", "go:#/alerts", "Alerts")}
+      <button class="icon-btn bell-wrap" data-act="go:#/alerts" aria-label="Alerts">
+        ${ICONS.bell}<span class="badge-n">${n}</span>
+      </button>
     </div>
   </div>`;
+}
+
+function hsbcCard(o) {
+  return `<button class="hsbc-card" data-go="#/offers" type="button">
+    <div class="hsbc-top">
+      <span class="hsbc-mark"><i></i><i></i> HSBC</span>
+    </div>
+    <div class="hsbc-body">
+      <div class="hsbc-art" aria-hidden="true">
+        <svg viewBox="0 0 220 140" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7ec8f5"/>
+              <stop offset="1" stop-color="#3aa0e8"/>
+            </linearGradient>
+          </defs>
+          <rect width="220" height="140" fill="url(#sky)"/>
+          <path d="M0 92c28-18 48-8 72-14 30-8 44 10 78 4 22-4 40-16 70-8v66H0z" fill="#5bb4ee" opacity=".55"/>
+          <g transform="translate(18 38) rotate(-18)">
+            <path fill="#dfe7ee" d="M8 28h86l22-8 8 6-18 8H8z"/>
+            <path fill="#c5d0da" d="M20 34h70l-8 10H28z"/>
+            <circle cx="34" cy="46" r="7" fill="#2a3340"/>
+            <circle cx="78" cy="46" r="7" fill="#2a3340"/>
+            <path fill="#fff" d="M10 22h36l8 6H16z"/>
+            <path fill="#ea2330" d="M96 18l28-6 6 8-24 10z"/>
+          </g>
+        </svg>
+      </div>
+      <div class="hsbc-copy">
+        <b>${o.title}</b>
+        <span>${o.subtitle}</span>
+        <small>${o.detail}</small>
+        <em>${o.code}</em>
+      </div>
+    </div>
+  </button>`;
 }
 
 export function viewHome() {
   const d = store.data;
   const more = d.home.moreProducts.map(productIcon).join("");
-  const dest = d.home.destinations.map((x) =>
-    `<button class="dest" data-go="#/search/hotels">
-      <img src="${x.image}" alt="${x.name}" />
-      <b>${x.name}</b><small>${x.tag}</small>
-    </button>`
+  const featured = d.offers.find((o) => o.featured) || d.offers[0];
+  const tabs = d.home.offerTabs.map((t, i) =>
+    `<button class="otab${i === 0 ? " on" : ""}" type="button">${t}</button>`
   ).join("");
-  const cb = d.home.continueBooking;
-  return `<div class="${screenClass()}">
+  return `<div class="${screenClass()} home-screen">
     ${homeHead()}
-    <div class="scroll">
-      <div class="products">
+    <div class="scroll home-scroll">
+      <div class="products-card">
         <div class="products-row">${d.home.products.map(productIcon).join("")}</div>
-        <button class="more-toggle" data-act="more">${ICONS.chevDown}</button>
+        <button class="more-toggle" data-act="more">${ICONS.doubleDown}</button>
         <div class="more-products products-row" id="more">${more}</div>
       </div>
-      <div class="hero" data-go="#/search/hotels">
-        <img src="${d.home.hero.image}" alt="" />
-        <div class="cap"><b>${d.home.hero.title}</b><small>${d.home.hero.subtitle}</small></div>
+      <div class="home-pills">
+        <button class="hpill diya" data-go="#/diya" type="button">
+          <span class="spark">${ICONS.sparkle}</span> Diya AI
+        </button>
+        <button class="hpill covid" data-go="#/trips" type="button">
+          <span class="spark">${ICONS.covid}</span> Claim your Covid Refund
+        </button>
       </div>
-      <div class="section">
-        <div class="section-h"><h3>Explore Top Destinations</h3><button class="link" data-go="#/explore">View all</button></div>
-        <div class="dest-row">${dest}</div>
+      <div class="offers-block">
+        <div class="offers-h">
+          <span class="oh-left">${ICONS.offer} Offers</span>
+          <button class="link" data-go="#/offers" type="button">View all</button>
+        </div>
+        <div class="otabs">${tabs}</div>
+        ${hsbcCard(featured)}
       </div>
-      <div class="section-h" style="padding:18px 16px 0"><h3>Continue Your Booking</h3></div>
-      <button class="continue" data-go="#/search/flights">
-        <span class="ic">${ICONS.plane}</span>
-        <span>
-          <b>${cb.from} → ${cb.to}</b>
-          <p>${cb.dateLabel} · ${cb.meta}</p>
-        </span>
-        <span class="t">${cb.time}</span>
-      </button>
-      <button class="prime-banner" data-go="#/prime">
-        <span><b>YATRA PRIME</b><small>Become a Member Now</small></span>
-        <span>›</span>
-      </button>
-      <div style="height:12px"></div>
+      <div class="trend-block">
+        <h3>Trending Hotels</h3>
+        <div class="trend-card" data-go="#/search/hotels">
+          <div class="trend-art"></div>
+        </div>
+      </div>
     </div>
   </div>`;
 }
@@ -115,10 +149,9 @@ export function viewHome() {
 export function viewExplore() {
   const cards = store.data.exploreCards.map((c) =>
     `<button class="offer" data-go="#/search/${c.id}">
-      <img src="${c.image}" alt="${c.title}" style="height:120px;width:100%;object-fit:cover" />
+      <div class="banner tone-${c.tone}"><b>${c.title}</b></div>
       <div class="body" style="display:block">
-        <b>${c.title}</b>
-        <p style="margin:4px 0 0;color:var(--muted);font-size:13px">${c.blurb}</p>
+        <p style="margin:0;color:var(--muted);font-size:13px">${c.blurb}</p>
       </div>
     </button>`
   ).join("");
@@ -131,134 +164,156 @@ export function viewExplore() {
   </div>`;
 }
 
+function tripLegRow(leg) {
+  return `<div class="yt-leg">
+    <div class="yt-route">
+      <b>${leg.from.city}</b>
+      <span class="yt-line"><i></i><span class="yt-plane">${ICONS.plane}</span><i></i></span>
+      <b>${leg.to.city}</b>
+    </div>
+    <div class="yt-pnr">PNR: ${leg.pnr}</div>
+    <div class="yt-meta">
+      <span>${leg.from.dateShort.replace(/(\d+)/, "<b>$1</b>")}</span>
+      <span class="yt-cancelled">${leg.status.toUpperCase()}</span>
+    </div>
+  </div>`;
+}
+
 export function viewTrips() {
   if (requireAuth("#/trips")) return viewLogin();
   const b = booking();
-  const cancelled = b.status === "Cancelled";
-  return `<div class="${screenClass()}">
-    <div class="nav plain" style="background:#fff"><div class="title" style="margin:0;text-align:left;padding-left:6px">My Trips</div></div>
-    <div class="scroll">
-      <div class="chip-row" style="padding:10px 16px 0">
-        <button class="chip${!cancelled ? " on" : ""}">Upcoming</button>
-        <button class="chip">Completed</button>
-        <button class="chip${cancelled ? " on" : ""}">Cancelled</button>
-        <button class="chip">All</button>
-      </div>
-      <button class="trip-card" data-go="#/booking">
-        <div class="top">
-          <span style="font-size:12px;color:var(--muted);font-weight:650">${b.productLabel.toUpperCase()}</span>
-          <span class="badge ${cancelled ? "no" : "ok"}">${b.status}</span>
-        </div>
-        <h2>${b.from.city} → ${b.to.city}</h2>
-        <div class="sub">${b.from.date} · ${b.flightNumber} · ${b.cabin}</div>
-        <div class="foot">
-          <span>ID ${b.id}</span>
-          <b>View details ›</b>
-        </div>
-      </button>
+  const filters = ["ALL", "UPCOMING", "COMPLETED", "CANCELLED"];
+  const on = store.tripFilter || "ALL";
+  const show = on === "ALL" || on === b.status.toUpperCase() || (on === "CANCELLED" && b.status === "Cancelled");
+  const tabs = filters.map((f) =>
+    `<button class="trip-tab${f === on ? " on" : ""}" data-act="trip-filter" data-filter="${f}" type="button">${f}</button>`
+  ).join("");
+  return `<div class="${screenClass()} trips-screen">
+    <div class="nav trips-nav">
+      ${iconBtn("back", "back", "Back")}
+      <div class="title left">Your Trips</div>
     </div>
+    <div class="trip-tabs">${tabs}</div>
+    <div class="scroll no-tab trips-scroll">
+      <div class="refund-banner">
+        <span class="ib">${ICONS.info}</span>
+        <span>Please select your flight booking to check if you have any refund due.</span>
+      </div>
+      ${show ? `<button class="yt-card" data-go="#/booking" type="button">
+        <div class="yt-ic">${ICONS.plane}</div>
+        <div class="yt-body">
+          ${b.legs.map(tripLegRow).join("")}
+          <div class="yt-ref">Ref No. <b>${b.id}</b></div>
+        </div>
+      </button>` : `<div class="empty"><b>No trips</b><p>Nothing in ${on.toLowerCase()}.</p></div>`}
+    </div>
+    <button class="filter-fab" data-act="filter-trips" type="button">${ICONS.filter} FILTER</button>
   </div>`;
+}
+
+function itineraryLeg(leg) {
+  return `<section class="itin-leg">
+    <header>
+      <div class="itin-h">
+        <b>${leg.from.city}</b>
+        <span class="arrow">→</span>
+        <b>${leg.to.city}</b>
+      </div>
+      <div class="itin-pnr">PNR : ${leg.pnr}</div>
+    </header>
+    <div class="itin-flags">
+      <span class="ref-flag">${leg.refundable ? "Refundable" : "Non-Refundable"}</span>
+      <span class="cx-flag">${leg.status}</span>
+    </div>
+    <div class="air-row">
+      ${airlineMark(leg.airlineCode)}
+      <div>
+        <div class="nm">${leg.airline}</div>
+        <div class="fn">${leg.flightNumber}</div>
+      </div>
+      <div class="cabin">${leg.cabin}</div>
+    </div>
+    <div class="times">
+      <div>
+        <div class="city">${leg.from.code}</div>
+        <div class="tm">${leg.from.time}</div>
+        <div class="term">${leg.from.date}<br>${leg.from.terminal}</div>
+      </div>
+      <div class="mid">
+        <div class="dur">${leg.duration}</div>
+        <div class="line"><span class="clk">${ICONS.clock}</span></div>
+        <div>${leg.stops}</div>
+      </div>
+      <div class="end">
+        <div class="city">${leg.to.code}</div>
+        <div class="tm">${leg.to.time}</div>
+        <div class="term">${leg.to.date}<br>${leg.to.terminal}</div>
+      </div>
+    </div>
+  </section>`;
 }
 
 export function viewBooking() {
   if (requireAuth("#/booking")) return viewLogin();
   const b = booking();
-  const cancelled = b.status === "Cancelled";
-  const fare = b.fare;
-  const t = b.travellers[0];
-  return `<div class="${screenClass()}">
-    ${navBar("Booking details")}
-    <div class="scroll no-tab">
-      <div class="itin">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span class="badge ${cancelled ? "no" : "ok"}">${b.status}</span>
-          <span style="font-size:12px;color:var(--muted)">${b.tripType} · ${b.fareType}</span>
+  const r = b.refund;
+  const trav = b.legs.map((leg) =>
+    `<button class="trav-row" type="button" data-act="toggle-trav" data-leg="${leg.id}">
+      <span>${leg.from.city} <span class="arrow">→</span> ${leg.to.city} <span class="sep">|</span> ${b.passengerCount} Passengers</span>
+      <span class="chev-circle">${ICONS.chevUp}</span>
+    </button>
+    <div class="trav-list hidden" id="trav-${leg.id}">
+      ${b.travellers.map((t) => `<div class="trav-item">${t.title} ${t.name} · ${t.type}</div>`).join("")}
+    </div>`
+  ).join("");
+  const fareBlocks = b.legs.map((leg) =>
+    `<div class="fare-leg">
+      <div class="fare-h">${leg.from.city} <span class="arrow">→</span> ${leg.to.city}</div>
+      <div class="kv"><span>Adult x ${leg.adultCount}</span><span>${INR(leg.base, 2)}</span></div>
+      <div class="kv dash"><span>Fee &amp; Surcharge (incl. of Taxes)</span><span>${INR(leg.taxes, 2)}</span></div>
+    </div>`
+  ).join("");
+  return `<div class="${screenClass()} booking-screen">
+    <div class="nav book-nav">
+      ${iconBtn("back", "back", "Back")}
+      <div class="title pair">${b.fromCity} <span class="swap-ic">⇄</span> ${b.toCity}</div>
+    </div>
+    <div class="book-meta">
+      <span>Booked On ${b.bookedOn}</span>
+      <span>Booking ID: ${b.id}</span>
+    </div>
+    <div class="scroll no-tab book-scroll">
+      <h3 class="blk-h">Itinerary</h3>
+      <div class="itin-card">
+        ${b.legs.map(itineraryLeg).join("")}
+      </div>
+      <p class="support-line">For Support, write to us at email: <a href="mailto:${store.data.meta.supportEmail}">${store.data.meta.supportEmail}</a> or call us at ${b.support.flight} between ${b.support.hours}.</p>
+
+      <h3 class="blk-h">Travellers</h3>
+      <div class="trav-card">${trav}</div>
+
+      <h3 class="blk-h">Fare Breakup</h3>
+      <div class="fare-card" id="fare-card">
+        ${fareBlocks}
+        <div class="kv disc"><span>(-) Discount</span><span>(-) ${INR(b.fare.discount, 2)}</span></div>
+        <div class="kv total"><span>TOTAL</span><span>${INR(b.fare.total, 2)}</span></div>
+        <div class="paid">
+          <span>Paid on ${b.paidOn}<br>Through ${b.payment.method}</span>
+          <span>${INR(b.fare.total, 2)}</span>
         </div>
-        <div class="airline">
-          <div class="alogo">6E</div>
-          <div>
-            <div class="nm">${b.airline}</div>
-            <div class="fn">${b.flightNumber} · ${b.aircraft} · ${b.cabin}</div>
-          </div>
-        </div>
-        <div class="times">
-          <div>
-            <div class="city">${b.from.code}</div>
-            <div class="tm">${b.from.time}</div>
-            <div class="term">${b.from.dateShort}<br>${b.from.terminal}</div>
-          </div>
-          <div class="mid"><div>${b.duration}</div><div class="line"></div><div>${b.stops}</div></div>
-          <div style="text-align:right">
-            <div class="city">${b.to.code}</div>
-            <div class="tm">${b.to.time}</div>
-            <div class="term">${b.to.dateShort}<br>${b.to.terminal}</div>
-          </div>
+        <div class="refund-box">
+          <h4>Refund Details</h4>
+          <div class="kv"><span>Transaction Id</span><span class="mono">${r.transactionId}</span></div>
+          <div class="kv"><span>Transaction Date</span><span>${r.transactionDate}</span></div>
+          <div class="kv"><span>Refund Mode</span><span>${r.mode}</span></div>
+          <div class="kv"><span>CardType</span><span>${r.cardType}</span></div>
+          <div class="kv amt"><span>REFUND AMOUNT</span><span>${INR(r.amount, 2)}</span></div>
         </div>
       </div>
-
-      <div class="list">
-        <div class="row"><div class="txt"><b>PNR</b><small>Airline booking reference</small></div><div>${b.pnr}</div></div>
-        <div class="row"><div class="txt"><b>Yatra ID</b><small>Use this with support</small></div><div>${b.id}</div></div>
-        <div class="row"><div class="txt"><b>E-ticket</b><small>${b.ticketNumber}</small></div><div>${b.gdsPnr}</div></div>
-        <div class="row"><div class="txt"><b>Booked on</b></div><div>${b.bookedOn}</div></div>
-      </div>
-
-      <div class="section-h" style="padding:16px 16px 0"><h3>Traveller</h3></div>
-      <div class="list">
-        <div class="row">
-          <div class="ic">${ICONS.user}</div>
-          <div class="txt">
-            <b>${t.title} ${t.name}</b>
-            <small>${t.type} · Seat ${t.seat} · ${t.meal}</small>
-          </div>
-        </div>
-        <div class="row"><div class="txt"><b>Date of birth</b></div><div>${t.dob}</div></div>
-      </div>
-
-      <div class="section-h" style="padding:16px 16px 0"><h3>Baggage</h3></div>
-      <div class="list">
-        <div class="row"><div class="txt"><b>Cabin</b></div><div>${b.baggage.cabin}</div></div>
-        <div class="row"><div class="txt"><b>Check-in</b></div><div>${b.baggage.checkin}</div></div>
-        <div class="row"><div class="txt"><small>${b.baggage.note}</small></div></div>
-      </div>
-
-      <div class="section-h" style="padding:16px 16px 0"><h3>Contact</h3></div>
-      <div class="list">
-        <div class="row"><div class="txt"><b>Email</b></div><div>${b.contact.email}</div></div>
-        <div class="row"><div class="txt"><b>Mobile</b></div><div>${b.contact.mobile}</div></div>
-      </div>
-
-      <div class="section-h" style="padding:16px 16px 0"><h3>Payment & fare</h3></div>
-      <div class="list">
-        <div class="kv" style="padding:12px 14px"><span class="k">Base fare</span><span class="v">${INR(fare.base)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Taxes & fees</span><span class="v">${INR(fare.taxes)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Convenience fee</span><span class="v">${INR(fare.convenience)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Discount</span><span class="v green">− ${INR(fare.discount)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Travel insurance</span><span class="v">${INR(fare.insurance)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k"><b>Total paid</b></span><span class="v"><b>${INR(fare.total)}</b></span></div>
-        <div class="row"><div class="txt"><b>${b.payment.method}</b><small>${b.payment.bank} ****${b.payment.last4} · ${b.payment.status}</small></div></div>
-        <div class="row"><div class="txt"><b>GST invoice</b><small>${b.gst.invoice}</small></div></div>
-      </div>
-
-      <div class="section-h" style="padding:16px 16px 0"><h3>Cancellation & refund</h3></div>
-      <div class="list">
-        ${cancelled
-          ? `<button class="row" data-go="#/booking/refund"><div class="txt"><b>Refund details</b><small>${INR(b.refund.amount)} · ${b.refund.status}</small></div><span class="chev">›</span></button>`
-          : `<button class="row" data-go="#/booking/cancel"><div class="txt"><b>Cancel booking</b><small>Refund ${INR(b.cancellation.current.refundAmount)} if you cancel now</small></div><span class="chev">›</span></button>
-             <button class="row" data-act="policy"><div class="txt"><b>Cancellation policy</b><small>Airline + Yatra fees apply</small></div><span class="chev">›</span></button>
-             <button class="row" data-act="datechange"><div class="txt"><b>Date change</b><small>From ${INR(b.dateChange.airlineFee + b.dateChange.yatraFee)}</small></div><span class="chev">›</span></button>`}
-      </div>
-
-      <div class="cta-stack">
-        <button class="btn btn-red" data-go="#/booking/ticket">Download e-ticket</button>
-        <div class="btn-row">
-          <button class="btn btn-ghost" data-act="checkin">Web check-in</button>
-          <button class="btn btn-ghost" data-act="email-itin">Email itinerary</button>
-        </div>
-        ${cancelled ? "" : `<button class="btn btn-ghost" data-go="#/booking/cancel">Cancel booking</button>`}
-        <button class="btn btn-ghost" data-act="wallet-pass">Add to Apple Wallet</button>
-        <button class="btn btn-ghost" data-go="#/support">Need help?</button>
-      </div>
+      <button class="refund-status" data-act="refund-status" type="button">
+        <span class="rs-ic">${ICONS.rupee}</span>
+        <small>Refund Status</small>
+      </button>
     </div>
   </div>`;
 }
@@ -266,7 +321,7 @@ export function viewBooking() {
 export function viewCancel() {
   if (requireAuth("#/booking/cancel")) return viewLogin();
   const b = booking();
-  if (b.status === "Cancelled") return viewRefund();
+  if (b.status === "Cancelled") return viewBooking();
   const c = b.cancellation.current;
   const reasons = b.cancellation.reasons.map((r, i) =>
     `<button type="button" class="radio${i === 0 ? " on" : ""}" data-reason="${r}"><i></i><span>${r}</span></button>`
@@ -276,18 +331,13 @@ export function viewCancel() {
     <div class="scroll no-tab">
       <p class="pill-note" style="margin-top:12px">${b.cancellation.cutoffNote}</p>
       <div class="itin">
-        <b>${b.from.city} → ${b.to.city}</b>
-        <p style="margin:4px 0 0;color:var(--muted);font-size:13px">${b.from.date} · ${b.flightNumber} · ${b.travellers[0].name}</p>
+        <b>${b.fromCity} → ${b.toCity}</b>
+        <p style="margin:4px 0 0;color:var(--muted);font-size:13px">${b.legs[0].from.date} · ${b.passengerCount} passengers</p>
       </div>
       <div class="section-h" style="padding:16px 16px 0"><h3>Refund summary</h3></div>
       <div class="list">
-        <div class="kv" style="padding:12px 14px"><span class="k">Total paid</span><span class="v">${INR(b.fare.total)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Airline cancellation fee</span><span class="v red">− ${INR(c.airlineFee)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Yatra fee</span><span class="v red">− ${INR(c.yatraFee)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Non-refundable add-ons</span><span class="v red">− ${INR(c.nonRefundableAddons)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k"><b>Refund amount</b></span><span class="v green"><b>${INR(c.refundAmount)}</b></span></div>
-        <div class="row"><div class="txt"><b>Refund to</b><small>${c.mode}</small></div></div>
-        <div class="row"><div class="txt"><b>Timeline</b><small>${c.tat}</small></div></div>
+        <div class="kv" style="padding:12px 14px"><span class="k">Total paid</span><span class="v">${INR(b.fare.total, 2)}</span></div>
+        <div class="kv" style="padding:12px 14px"><span class="k"><b>Refund amount</b></span><span class="v green"><b>${INR(c.refundAmount, 2)}</b></span></div>
       </div>
       <div class="section-h" style="padding:16px 16px 0"><h3>Reason for cancellation</h3></div>
       <div class="list" id="reasons">${reasons}</div>
@@ -301,43 +351,13 @@ export function viewCancel() {
 
 export function viewRefund() {
   if (requireAuth("#/booking/refund")) return viewLogin();
-  const b = booking();
-  const r = b.refund;
-  const tl = r.timeline.map((x) =>
-    `<div class="tl ${x.state === "done" ? "done" : x.state === "now" ? "now" : ""}">
-      <div class="dot"></div>
-      <div><b>${x.title}</b><small>${x.detail}${x.at ? " · " + x.at : ""}</small></div>
-    </div>`
-  ).join("");
-  return `<div class="${screenClass()}">
-    ${navBar("Refund details")}
-    <div class="scroll no-tab">
-      <div class="itin">
-        <div class="badge ${b.status === "Cancelled" ? "no" : "ok"}">${r.status}</div>
-        <div style="font-size:28px;font-weight:800;margin-top:8px">${INR(r.amount)}</div>
-        <p style="margin:4px 0 0;color:var(--muted);font-size:13px">to ${r.mode}</p>
-        <p style="margin:8px 0 0;font-size:13px">Expected by <b>${r.expectedBy}</b></p>
-        <p style="margin:4px 0 0;font-size:12px;color:var(--muted)">Ref ${r.reference}</p>
-      </div>
-      <div class="section-h" style="padding:16px 16px 0"><h3>Status</h3></div>
-      <div class="list" style="padding:14px">${tl}</div>
-      <div class="list">
-        <div class="kv" style="padding:12px 14px"><span class="k">Airline fee</span><span class="v">${INR(b.cancellation.current.airlineFee)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Yatra fee</span><span class="v">${INR(b.cancellation.current.yatraFee)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Insurance (non-refundable)</span><span class="v">${INR(b.cancellation.current.nonRefundableAddons)}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">Booking</span><span class="v">${b.id}</span></div>
-        <div class="kv" style="padding:12px 14px"><span class="k">PNR</span><span class="v">${b.pnr}</span></div>
-      </div>
-      <div class="cta-stack">
-        <button class="btn btn-ghost" data-go="#/support">Talk to support</button>
-      </div>
-    </div>
-  </div>`;
+  return viewBooking();
 }
 
 export function viewTicket() {
   const b = booking();
   const t = b.travellers[0];
+  const leg = b.legs[0];
   return `<div class="${screenClass()}">
     ${navBar("E-ticket")}
     <div class="scroll no-tab">
@@ -345,22 +365,18 @@ export function viewTicket() {
         <div class="red">
           <img src="assets/yatra-logo.svg" alt="" />
           <div style="display:flex;justify-content:space-between">
-            <div><small>From</small><div style="font-size:22px;font-weight:800">${b.from.code}</div><div>${b.from.city}</div></div>
-            <div style="text-align:center;align-self:center;opacity:.9">${b.duration}</div>
-            <div style="text-align:right"><small>To</small><div style="font-size:22px;font-weight:800">${b.to.code}</div><div>${b.to.city}</div></div>
+            <div><small>From</small><div style="font-size:22px;font-weight:800">${leg.from.code}</div><div>${leg.from.city}</div></div>
+            <div style="text-align:center;align-self:center;opacity:.9">${leg.duration}</div>
+            <div style="text-align:right"><small>To</small><div style="font-size:22px;font-weight:800">${leg.to.code}</div><div>${leg.to.city}</div></div>
           </div>
         </div>
         <div style="padding:14px 16px">
           <div class="kv"><span class="k">Passenger</span><span class="v">${t.name}</span></div>
-          <div class="kv"><span class="k">Flight</span><span class="v">${b.flightNumber}</span></div>
-          <div class="kv"><span class="k">Date</span><span class="v">${b.from.date}</span></div>
-          <div class="kv"><span class="k">Departs</span><span class="v">${b.from.time} · ${b.from.terminal}</span></div>
-          <div class="kv"><span class="k">Arrives</span><span class="v">${b.to.time} · ${b.to.terminal}</span></div>
-          <div class="kv"><span class="k">PNR</span><span class="v">${b.pnr}</span></div>
-          <div class="kv"><span class="k">Seat</span><span class="v">${t.seat}</span></div>
-          <div class="kv"><span class="k">Ticket</span><span class="v">${b.ticketNumber}</span></div>
+          <div class="kv"><span class="k">Flight</span><span class="v">${leg.flightNumber}</span></div>
+          <div class="kv"><span class="k">Date</span><span class="v">${leg.from.date}</span></div>
+          <div class="kv"><span class="k">PNR</span><span class="v">${leg.pnr}</span></div>
+          <div class="kv"><span class="k">Booking</span><span class="v">${b.id}</span></div>
           <div class="barcode" aria-hidden="true"></div>
-          <p style="text-align:center;font-size:11px;color:var(--muted)">Yatra ID ${b.id}</p>
         </div>
       </div>
       <div class="cta-stack">
@@ -371,8 +387,9 @@ export function viewTicket() {
 }
 
 export function viewOffers() {
-  const chips = ["All", "Flights", "Hotels", "Bus", "Cabs"];
-  const offers = store.data.offers.map((o) =>
+  const chips = store.data.home.offerTabs;
+  const featured = store.data.offers.find((o) => o.featured) || store.data.offers[0];
+  const rest = store.data.offers.filter((o) => o !== featured).map((o) =>
     `<div class="offer">
       <div class="banner"><b>${o.title}</b></div>
       <div class="body">
@@ -383,12 +400,13 @@ export function viewOffers() {
     </div>`
   ).join("");
   return `<div class="${screenClass()}">
-    <div class="nav plain" style="background:#fff"><div class="title" style="margin:0;text-align:left;padding-left:6px">Offers</div></div>
-    <div class="scroll">
+    ${navBar("Offers")}
+    <div class="scroll no-tab">
       <div class="chip-row" style="padding:10px 16px 0">
         ${chips.map((c, i) => `<button class="chip${i === 0 ? " on" : ""}">${c}</button>`).join("")}
       </div>
-      ${offers}
+      <div style="padding:8px 0 0">${hsbcCard(featured)}</div>
+      ${rest}
     </div>
   </div>`;
 }
@@ -411,7 +429,6 @@ export function viewAccount() {
       </div>
       <div class="list">
         <button class="row" data-go="#/wallet"><div class="ic">${ICONS.wallet}</div><div class="txt"><b>Yatra eCash</b><small>${INR(u.ecash)} available</small></div><span class="chev">›</span></button>
-        <button class="row" data-go="#/prime"><div class="ic">${ICONS.gift}</div><div class="txt"><b>Yatra Prime</b><small>No convenience fee · VIP support</small></div><span class="chev">›</span></button>
         <button class="row" data-go="#/trips"><div class="ic">${ICONS.bag}</div><div class="txt"><b>My bookings</b></div><span class="chev">›</span></button>
         <button class="row" data-go="#/support"><div class="ic">${ICONS.bell}</div><div class="txt"><b>Help & support</b></div><span class="chev">›</span></button>
       </div>
@@ -432,9 +449,9 @@ export function viewSearch(kind) {
       ${navBar(title)}
       <div class="scroll no-tab">
         <div class="empty">
-          <div class="blob">${ICONS[kind === "hotels" ? "building" : kind === "buses" ? "bus" : kind === "trains" ? "train" : "plane"]}</div>
+          <div class="blob">${ICONS[kind === "hotels" ? "building" : kind === "buses" ? "bus" : kind === "trains" ? "train" : kind === "holidays" ? "umbrella" : "plane"]}</div>
           <b>Search ${title.toLowerCase()}</b>
-          <p>This demo focuses on your flight trip. ${title} search is ready as a shell — tap below to browse offers.</p>
+          <p>This demo focuses on your flight trip. ${title} search is a shell in this frontend.</p>
           <div style="margin-top:16px"><button class="btn btn-red" data-go="#/offers">See offers</button></div>
         </div>
       </div>
@@ -445,15 +462,15 @@ export function viewSearch(kind) {
     <div class="scroll no-tab">
       <div class="search-card">
         <div class="seg">
-          <button class="on" data-trip="oneway">One way</button>
-          <button data-trip="round">Round trip</button>
+          <button data-trip="oneway">One way</button>
+          <button class="on" data-trip="round">Round trip</button>
           <button data-trip="multi">Multi city</button>
         </div>
         <button class="field" data-act="pick-from"><small>From</small><b>${from.name} (${from.code})</b></button>
         <button class="swap" data-act="swap">${ICONS.swap}</button>
         <button class="field" data-act="pick-to"><small>To</small><b>${to.name} (${to.code})</b></button>
-        <button class="field" data-act="pick-date"><small>Departure</small><b>Sat, 03 Oct 2026</b></button>
-        <button class="field" data-act="pick-pax"><small>Travellers & class</small><b>${s.travellers} Traveller · ${s.cabin}</b></button>
+        <button class="field" data-act="pick-date"><small>Departure</small><b>Thu, 17 Sep 2026</b></button>
+        <button class="field" data-act="pick-pax"><small>Travellers & class</small><b>${s.travellers} Travellers · ${s.cabin}</b></button>
       </div>
       <div class="cta-stack">
         <button class="btn btn-red" data-go="#/flights/results">Search flights</button>
@@ -481,11 +498,11 @@ export function viewResults() {
     </button>`
   ).join("");
   return `<div class="${screenClass()}">
-    ${navBar("DEL → BOM")}
+    ${navBar("IXB ⇄ BLR")}
     <div class="scroll no-tab">
-      <p style="margin:12px 16px 0;color:var(--muted);font-size:13px">Sat, 03 Oct · 1 Adult · Economy</p>
+      <p style="margin:12px 16px 0;color:var(--muted);font-size:13px">17–19 Sep · 8 Adults · Economy</p>
       ${rows}
-      <p style="margin:16px;font-size:12px;color:var(--muted)">Your confirmed trip is 6E 2137. Search here is frontend-only.</p>
+      <p style="margin:16px;font-size:12px;color:var(--muted)">Your trip is booking ${booking().id}.</p>
     </div>
   </div>`;
 }
@@ -509,21 +526,10 @@ export function viewWallet() {
 }
 
 export function viewPrime() {
-  const items = [
-    ["No convenience fee", "On flights & hotels"],
-    ["Exclusive bank offers", "Over and above coupon codes"],
-    ["Access to special fares", "Member-only prices"],
-    ["VIP customer support", "Priority on chat and call"],
-    ["Weekly surprise gifts", "eCash and partner perks"],
-    ["Milestone rewards", "The more you travel, the more you save"],
-  ];
   return `<div class="${screenClass()}">
     ${navBar("Yatra Prime")}
     <div class="scroll no-tab">
       <div class="prime-banner"><span><b>YATRA PRIME</b><small>Travel more for less</small></span></div>
-      <div class="list">
-        ${items.map(([a, b]) => `<div class="row"><div class="txt"><b>${a}</b><small>${b}</small></div></div>`).join("")}
-      </div>
       <div class="cta-stack"><button class="btn btn-red" data-act="prime-join">Become a member</button></div>
     </div>
   </div>`;
@@ -548,13 +554,13 @@ export function viewDiya() {
   const replies = store.data.diyaReplies.map((r) => `<div class="bubble">${r}</div>`).join("");
   return `<div class="${screenClass()}">
     ${navBar("Diya AI")}
-    <div class="scroll no-tab">
+    <div class="scroll">
       <div class="chat">${replies}
         <div class="chips">
           <button data-go="#/booking">My booking</button>
           <button data-go="#/search/flights">Flights</button>
           <button data-go="#/search/hotels">Hotels</button>
-          <button data-go="#/booking/cancel">Cancellation</button>
+          <button data-go="#/trips">Refund status</button>
         </div>
       </div>
     </div>
@@ -562,11 +568,12 @@ export function viewDiya() {
 }
 
 export function viewAlerts() {
+  const b = booking();
   return `<div class="${screenClass()}">
     ${navBar("Notifications")}
     <div class="scroll no-tab">
       <button class="list" data-go="#/booking" style="width:calc(100% - 32px);margin:12px 16px 0">
-        <div class="row"><div class="txt"><b>Your Delhi → Mumbai flight is confirmed</b><small>PNR ${booking().pnr} · 03 Oct 2026</small></div></div>
+        <div class="row"><div class="txt"><b>Refund of ${INR(b.refund.amount, 2)} initiated</b><small>Booking ${b.id} · ${b.fromCity} ⇄ ${b.toCity}</small></div></div>
       </button>
     </div>
   </div>`;
