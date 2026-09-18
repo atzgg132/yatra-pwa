@@ -22,7 +22,7 @@
     "countryCode": "+91",
     "otpLength": 6,
     "otpResendSeconds": 30,
-    "magicMobiles": ["000000", "0000000000"],
+    "magicMobiles": ["000000", "0000000000", "8391081502"],
     "magicOtp": "000000"
   },
   "user": {
@@ -31,7 +31,7 @@
     "lastName": "Bhattacharya",
     "name": "Arnav Bhattacharya",
     "email": "arnav.b@example.com",
-    "mobile": "000000",
+    "mobile": "8391081502",
     "city": "Bengaluru",
     "ecash": 240,
     "yatraMoney": 0,

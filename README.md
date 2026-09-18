@@ -11,7 +11,12 @@ https://atzgg132.github.io/
 2. Tap **Share** → **Add to Home Screen**.
 3. Tap **Add**. Launch the red **Yatra** icon.
 
-It then runs standalone (no Safari chrome). Login with mobile **000000** and OTP **000000**.
+It then runs standalone (no Safari chrome). Login with mobile **8391081502** or **000000**, OTP **000000**.
+
+## Hosting
+
+The live app is the user GitHub Pages site: https://atzgg132.github.io/  
+GitHub serves `main` with the built-in branch publisher. **Do not add Actions workflows** for Pages or icon decode. Those jobs failed on every push (Pages cannot be enabled on `yatra-pwa` from Actions; icon decode kept missing files) and emailed a failure each time.
 
 ## What’s in the demo
 
