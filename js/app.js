@@ -1,1 +1,2 @@
-PLACEHOLDER_READ_FROM_DISK
+const INR = (n) =>
+  "\u20b9" + Number(n).toLocaleString("en-IN");
