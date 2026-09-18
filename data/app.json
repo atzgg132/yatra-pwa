@@ -3,8 +3,9 @@
     "name": "Yatra",
     "shortName": "Yatra",
     "tagline": "Trusted by 50 Million+ happy travellers",
-    "supportPhone": "0120-4845562",
+    "supportPhone": "011-6503-1234",
     "supportEmail": "support@yatra.com",
+    "supportHours": "9 am to 11:59 pm",
     "disclaimer": "Unofficial frontend demo. Not affiliated with Yatra Online Limited."
   },
   "brand": {
@@ -38,80 +39,73 @@
   },
   "home": {
     "greeting": "Hey Arnav",
+    "alertCount": "5+",
     "products": [
       { "id": "flights", "label": "Flights", "icon": "plane" },
       { "id": "hotels", "label": "Hotels", "icon": "building" },
+      { "id": "holidays", "label": "Holidays", "icon": "umbrella" },
       { "id": "buses", "label": "Buses", "icon": "bus" },
-      { "id": "trains", "label": "Trains", "icon": "train" },
-      { "id": "cabs", "label": "Cabs", "icon": "car" }
+      { "id": "trains", "label": "Trains", "icon": "train" }
     ],
     "moreProducts": [
-      { "id": "holidays", "label": "Holidays", "icon": "palm" },
+      { "id": "cabs", "label": "Cabs", "icon": "car" },
       { "id": "homestays", "label": "Homestays", "icon": "home" },
       { "id": "activities", "label": "Activities", "icon": "ticket" },
       { "id": "visa", "label": "Visa", "icon": "passport" },
-      { "id": "metro", "label": "Metro", "icon": "metro" },
-      { "id": "giftcard", "label": "Gift Card", "icon": "gift" }
+      { "id": "metro", "label": "Metro", "icon": "metro" }
     ],
-    "hero": {
-      "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80",
-      "title": "Beach escapes",
-      "subtitle": "Hotels from ₹2,499"
-    },
-    "destinations": [
-      { "id": "goa", "name": "Goa", "tag": "Beach Paradise", "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80" },
-      { "id": "dubai", "name": "Dubai", "tag": "City of Gold", "image": "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=600&q=80" },
-      { "id": "manali", "name": "Manali", "tag": "Mountain Hills", "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" }
+    "pills": [
+      { "id": "diya", "label": "Diya AI", "kind": "diya", "go": "#/diya" },
+      { "id": "covid", "label": "Claim your Covid Refund", "kind": "covid", "go": "#/trips" }
     ],
-    "continueBooking": {
-      "type": "flight",
-      "from": "New Delhi",
-      "fromCode": "DEL",
-      "to": "Mumbai",
-      "toCode": "BOM",
-      "dateLabel": "03 Oct 2026",
-      "meta": "1 Traveller · Economy",
-      "time": "06:00"
-    }
+    "offerTabs": ["All", "Flights", "Hotels", "Bus", "Cabs"],
+    "trendingHotels": [
+      { "id": "taj", "name": "Airport hotels", "place": "Bengaluru", "tone": "dusk" }
+    ]
   },
   "exploreCards": [
     {
       "id": "flights",
       "title": "Flights",
       "blurb": "Fly smart, spend less. Best fares guaranteed.",
-      "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80",
       "tone": "rose"
     },
     {
       "id": "hotels",
       "title": "Hotels",
       "blurb": "Sleep well, save more. Top hotels, unbeatable prices.",
-      "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
       "tone": "blue"
     },
     {
       "id": "trains",
       "title": "Trains",
       "blurb": "Skip the queues — confirmed seats at best fares.",
-      "image": "https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?auto=format&fit=crop&w=800&q=80",
       "tone": "green"
     },
     {
       "id": "buses",
       "title": "Buses",
       "blurb": "980+ routes, 50K+ operators. Your seat’s waiting.",
-      "image": "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=800&q=80",
       "tone": "amber"
     },
     {
       "id": "holidays",
       "title": "Holidays",
       "blurb": "Turn plans into memories. Curated packages, zero hassle.",
-      "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
       "tone": "lilac"
     }
   ],
   "offers": [
+    {
+      "id": "hsbc",
+      "category": "Flights",
+      "title": "Up to INR 3,000 OFF*",
+      "subtitle": "On Domestic Flights",
+      "detail": "*Offer applicable on HSBC Credit Card transactions only.",
+      "code": "YATRAHSBC",
+      "bank": "HSBC",
+      "featured": true
+    },
     {
       "id": "ytwelcome",
       "category": "Flights",
@@ -121,30 +115,17 @@
     },
     {
       "id": "flashapp",
-      "category": "Flights",
+      "category": "Hotels",
       "title": "FLASH DEAL · Every day from 4 to 5 PM",
       "code": "FLASHAPP",
       "detail": "Valid for all users on app. Limited inventory."
-    },
-    {
-      "id": "hsbc",
-      "category": "Flights",
-      "title": "Up to ₹3,000 OFF* on Domestic Flights",
-      "code": "HSBC3000",
-      "detail": "Valid on HSBC Credit Card transaction only."
-    },
-    {
-      "id": "weekend",
-      "category": "Hotels",
-      "title": "Long Weekend Offer — up to ₹1,400 OFF*",
-      "code": "WEEKEND14",
-      "detail": "On domestic hotels. Blackout dates apply."
     }
   ],
   "cities": [
+    { "code": "IXB", "name": "Bagdogra", "airport": "Bagdogra Airport", "city": "Bagdogra" },
+    { "code": "BLR", "name": "Bangalore", "airport": "Kempegowda International", "city": "Bangalore" },
     { "code": "DEL", "name": "New Delhi", "airport": "Indira Gandhi International", "city": "Delhi" },
     { "code": "BOM", "name": "Mumbai", "airport": "Chhatrapati Shivaji Maharaj International", "city": "Mumbai" },
-    { "code": "BLR", "name": "Bengaluru", "airport": "Kempegowda International", "city": "Bengaluru" },
     { "code": "MAA", "name": "Chennai", "airport": "Chennai International", "city": "Chennai" },
     { "code": "HYD", "name": "Hyderabad", "airport": "Rajiv Gandhi International", "city": "Hyderabad" },
     { "code": "CCU", "name": "Kolkata", "airport": "Netaji Subhas Chandra Bose International", "city": "Kolkata" },
@@ -152,183 +133,153 @@
   ],
   "flightResults": [
     {
-      "id": "6E2137",
-      "airline": "IndiGo",
-      "code": "6E 2137",
-      "from": "DEL",
-      "to": "BOM",
-      "depart": "06:00",
-      "arrive": "08:15",
-      "duration": "2h 15m",
-      "stops": "Non-stop",
-      "price": 5847,
-      "fareType": "Saver",
-      "seats": 3
+      "id": "IX2963",
+      "airline": "Air India Express",
+      "code": "IX 2963",
+      "from": "IXB",
+      "to": "BLR",
+      "depart": "16:15",
+      "arrive": "19:10",
+      "duration": "02hr 55min",
+      "stops": "Non Stop",
+      "price": 60488,
+      "fareType": "Non-Refundable",
+      "seats": 2
     },
     {
-      "id": "AI2441",
-      "airline": "Air India",
-      "code": "AI 2441",
-      "from": "DEL",
-      "to": "BOM",
-      "depart": "07:10",
-      "arrive": "09:25",
-      "duration": "2h 15m",
-      "stops": "Non-stop",
-      "price": 6120,
-      "fareType": "Economy",
-      "seats": 9
-    },
-    {
-      "id": "SG8161",
-      "airline": "SpiceJet",
-      "code": "SG 8161",
-      "from": "DEL",
-      "to": "BOM",
-      "depart": "08:45",
-      "arrive": "11:10",
-      "duration": "2h 25m",
-      "stops": "Non-stop",
-      "price": 4999,
-      "fareType": "SpiceSaver",
-      "seats": 5
-    },
-    {
-      "id": "QP1450",
+      "id": "QP1372",
       "airline": "Akasa Air",
-      "code": "QP 1450",
-      "from": "DEL",
-      "to": "BOM",
-      "depart": "19:30",
-      "arrive": "21:50",
-      "duration": "2h 20m",
-      "stops": "Non-stop",
-      "price": 5450,
-      "fareType": "Lite",
-      "seats": 12
+      "code": "QP 1372",
+      "from": "BLR",
+      "to": "IXB",
+      "depart": "05:30",
+      "arrive": "10:15",
+      "duration": "04hr 45min",
+      "stops": "Non Stop",
+      "price": 72760,
+      "fareType": "Refundable",
+      "seats": 4
     }
   ],
   "diyaReplies": [
-    "Hello Guest! I’m your Trip Planner Bot. Share your dates and city, and I’ll suggest flights and hotels.",
-    "Your Delhi → Mumbai trip on 03 Oct is already confirmed. Want me to pull up the itinerary?",
-    "I can help with web check-in, cancellation charges, or hotels near your arrival terminal."
+    "Hello! I’m Diya, your trip planner. Your Bagdogra ⇄ Bangalore booking is cancelled — a refund of ₹17,348.00 is on the way.",
+    "Tap My Trips to open booking 3007260073124 and see the fare breakup.",
+    "I can help with refund status, new flights, or hotels."
   ],
   "booking": {
-    "id": "YT2609121847",
+    "id": "3007260073124",
     "type": "flight",
-    "status": "Confirmed",
+    "status": "Cancelled",
     "productLabel": "Flight",
-    "bookedOn": "12 Sep 2026, 6:42 PM",
-    "pnr": "NHP8K2",
-    "airlinePnr": "NHP8K2",
-    "gdsPnr": "K8P2NH",
-    "ticketNumber": "121-2345678901",
-    "airline": "IndiGo",
-    "airlineCode": "6E",
-    "flightNumber": "6E 2137",
-    "aircraft": "Airbus A320neo",
-    "fareType": "Saver",
+    "bookedOn": "30 Jul'26",
+    "paidOn": "30 Jul 26",
+    "tripType": "Round trip",
+    "fromCity": "Bagdogra",
+    "toCity": "Bangalore",
+    "passengerCount": 8,
     "cabin": "Economy",
-    "tripType": "One way",
-    "from": {
-      "code": "DEL",
-      "city": "New Delhi",
-      "airport": "Indira Gandhi International Airport",
-      "terminal": "Terminal 1",
-      "time": "06:00",
-      "date": "Sat, 03 Oct 2026",
-      "dateShort": "03 Oct"
-    },
-    "to": {
-      "code": "BOM",
-      "city": "Mumbai",
-      "airport": "Chhatrapati Shivaji Maharaj International Airport",
-      "terminal": "Terminal 2",
-      "time": "08:15",
-      "date": "Sat, 03 Oct 2026",
-      "dateShort": "03 Oct"
-    },
-    "duration": "2h 15m",
-    "stops": "Non-stop",
-    "checkInWindow": "Web check-in opens 48 hours before departure.",
-    "travellers": [
-      {
-        "id": "p1",
-        "type": "Adult",
-        "title": "Mr",
-        "firstName": "Arnav",
-        "lastName": "Bhattacharya",
-        "name": "Arnav Bhattacharya",
-        "gender": "Male",
-        "dob": "12 Mar 1998",
-        "seat": "14C",
-        "meal": "Not added",
-        "frequentFlyer": "—"
-      }
-    ],
-    "contact": {
-      "email": "arnav.b@example.com",
-      "mobile": "+91 000000",
-      "alternate": "—"
-    },
-    "baggage": {
-      "cabin": "7 kg",
-      "checkin": "15 kg",
-      "note": "Saver fare. Extra baggage can be purchased on the airline website."
-    },
-    "addons": [
-      { "name": "Travel insurance (Acko)", "amount": 399, "refundable": false },
-      { "name": "Seat 14C", "amount": 0, "refundable": false }
-    ],
     "payment": {
-      "method": "Visa Credit Card",
-      "last4": "0000",
-      "bank": "HDFC Bank",
-      "paidOn": "12 Sep 2026, 6:42 PM",
-      "transactionId": "pay_YT9K2M1847DEL",
+      "method": "Debit",
+      "last4": "",
+      "bank": "",
+      "paidOn": "30 Jul 26",
+      "transactionId": "PAY_TJKBPBJU0RFE0W",
       "status": "Success"
     },
     "fare": {
       "currency": "INR",
-      "base": 4250,
-      "taxes": 1399,
-      "convenience": 0,
-      "discount": 201,
-      "insurance": 399,
-      "seat": 0,
-      "total": 5847
+      "discount": 4888,
+      "total": 128360
     },
-    "gst": {
-      "invoice": "YT/INV/26-27/09121847",
-      "gstin": "06AABCV1234A1Z5"
+    "legs": [
+      {
+        "id": "out",
+        "from": {
+          "code": "IXB",
+          "city": "Bagdogra",
+          "terminal": "Bagdogra",
+          "time": "16:15",
+          "date": "Thu,17 Sep 2026",
+          "dateShort": "Thu 17 Sep"
+        },
+        "to": {
+          "code": "BLR",
+          "city": "Bangalore",
+          "terminal": "Bangalore,T-2",
+          "time": "19:10",
+          "date": "Thu,17 Sep 2026",
+          "dateShort": "Thu 17 Sep"
+        },
+        "pnr": "QBEYVN",
+        "refundable": false,
+        "status": "Cancelled",
+        "airline": "Air India Express",
+        "airlineCode": "IX",
+        "flightNumber": "IX 2963",
+        "cabin": "Economy",
+        "duration": "02hr 55min",
+        "stops": "Non Stop",
+        "adultCount": 8,
+        "base": 44864,
+        "taxes": 15624
+      },
+      {
+        "id": "ret",
+        "from": {
+          "code": "BLR",
+          "city": "Bangalore",
+          "terminal": "Bangalore,T-1",
+          "time": "05:30",
+          "date": "Sat,19 Sep 2026",
+          "dateShort": "Sat 19 Sep"
+        },
+        "to": {
+          "code": "IXB",
+          "city": "Bagdogra",
+          "terminal": "Bagdogra,T-2",
+          "time": "10:15",
+          "date": "Sat,19 Sep 2026",
+          "dateShort": "Sat 19 Sep"
+        },
+        "pnr": "C5JKJP",
+        "refundable": true,
+        "status": "Cancelled",
+        "airline": "Akasa Air",
+        "airlineCode": "QP",
+        "flightNumber": "QP 1372",
+        "cabin": "Economy",
+        "duration": "04hr 45min",
+        "stops": "Non Stop",
+        "adultCount": 8,
+        "base": 62496,
+        "taxes": 10264
+      }
+    ],
+    "travellers": [
+      { "id": "p1", "type": "Adult", "title": "Mr", "name": "Arnav Bhattacharya" },
+      { "id": "p2", "type": "Adult", "title": "Ms", "name": "Ananya Bhattacharya" },
+      { "id": "p3", "type": "Adult", "title": "Mr", "name": "Rohan Sharma" },
+      { "id": "p4", "type": "Adult", "title": "Mrs", "name": "Priya Sharma" },
+      { "id": "p5", "type": "Adult", "title": "Mr", "name": "Vikram Rao" },
+      { "id": "p6", "type": "Adult", "title": "Ms", "name": "Neha Rao" },
+      { "id": "p7", "type": "Adult", "title": "Mr", "name": "Amit Patel" },
+      { "id": "p8", "type": "Adult", "title": "Mrs", "name": "Kavita Patel" }
+    ],
+    "contact": {
+      "email": "arnav.b@example.com",
+      "mobile": "+91 000000"
     },
     "cancellation": {
-      "cancellable": true,
-      "cutoffNote": "Cancellation not permitted within 4 hours of departure (airline clock).",
-      "slabs": [
-        {
-          "window": "Now until 03 Oct 2026, 02:00 AM (4 hrs before departure)",
-          "airlineFee": 3999,
-          "yatraFee": 300,
-          "insurance": 399,
-          "refund": 1149
-        },
-        {
-          "window": "Within 4 hours of departure / no-show",
-          "airlineFee": 5847,
-          "yatraFee": 0,
-          "insurance": 0,
-          "refund": 0
-        }
-      ],
+      "cancellable": false,
+      "cutoffNote": "This booking is already cancelled.",
       "current": {
-        "airlineFee": 3999,
-        "yatraFee": 300,
-        "nonRefundableAddons": 399,
-        "totalDeductions": 4698,
-        "refundAmount": 1149,
-        "mode": "Original payment source · Visa ****0000",
-        "tat": "5–7 working days after airline processes the refund"
+        "airlineFee": 0,
+        "yatraFee": 0,
+        "nonRefundableAddons": 0,
+        "totalDeductions": 0,
+        "refundAmount": 17348,
+        "mode": "DEBIT",
+        "tat": "5–7 working days"
       },
       "reasons": [
         "Change of plans",
@@ -339,28 +290,25 @@
         "Other"
       ]
     },
-    "dateChange": {
-      "allowed": true,
-      "airlineFee": 2999,
-      "yatraFee": 250,
-      "fareDifferenceNote": "Plus any fare difference on the new flight."
-    },
     "refund": {
-      "status": "Not initiated",
-      "amount": 1149,
-      "mode": "Visa ****0000",
-      "reference": "RFND-YT2609121847",
+      "status": "Refund initiated",
+      "amount": 17348,
+      "mode": "DEBIT",
+      "cardType": "DEBIT",
+      "transactionId": "PAY_7H6KQ2M9LZP4D1",
+      "transactionDate": "1789634287000",
+      "reference": "PAY_7H6KQ2M9LZP4D1",
       "expectedBy": "Fri, 25 Sep 2026",
       "timeline": [
-        { "id": "requested", "title": "Cancellation requested", "detail": "You cancelled this booking on Yatra.", "state": "pending" },
-        { "id": "airline", "title": "Airline processed refund", "detail": "IndiGo confirms credit to Yatra.", "state": "pending" },
-        { "id": "yatra", "title": "Yatra initiated payout", "detail": "Amount ₹1,149 to Visa ****0000.", "state": "pending" },
+        { "id": "requested", "title": "Cancellation requested", "detail": "Both sectors cancelled on Yatra.", "state": "done" },
+        { "id": "airline", "title": "Airline processed refund", "detail": "Refundable sector credited to Yatra.", "state": "done" },
+        { "id": "yatra", "title": "Yatra initiated payout", "detail": "Amount ₹17,348.00 to original debit source.", "state": "now" },
         { "id": "bank", "title": "Refund credited", "detail": "Banks typically take 5–7 working days.", "state": "pending" }
       ]
     },
     "support": {
-      "flight": "0120-4845562",
-      "hours": "09:00 – 23:59 IST"
+      "flight": "011-6503-1234",
+      "hours": "9 am to 11:59 pm"
     }
   }
 }
