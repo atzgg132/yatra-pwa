@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 import json, base64, pathlib
 root = pathlib.Path(__file__).resolve().parents[1]
-data = json.loads((root / "scripts" / "icons.json").read_text())
+data = {}
+for p in sorted((root / "scripts").glob("icons*.json")):
+    data.update(json.loads(p.read_text()))
+if not data:
+    raise SystemExit("no scripts/icons*.json found")
 for rel, b64 in data.items():
     path = root / rel
     path.parent.mkdir(parents=True, exist_ok=True)
