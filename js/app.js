@@ -28,3 +28,122 @@ const ICONS = {
   house: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l9 8h-2.5V20h-5v-6h-3.5v6h-5v-8H3z"/></svg>`,
   swap: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8h13M16 4l4 4-4 4M17 16H4M8 12l-4 4 4 4"/></svg>`,
 };
+
+const TABS = [
+  { id: "home", label: "Home", icon: "house", hash: "#/home" },
+  { id: "explore", label: "Explore", icon: "compass", hash: "#/explore" },
+  { id: "trips", label: "My Trips", icon: "bag", hash: "#/trips" },
+  { id: "offers", label: "Offers", icon: "pct", hash: "#/offers" },
+  { id: "account", label: "Profile", icon: "user", hash: "#/account" },
+];
+
+const store = {
+  data: null,
+  session: JSON.parse(localStorage.getItem("yatra.session") || "null"),
+  bookingState: JSON.parse(localStorage.getItem("yatra.bookingState") || "null"),
+  navDir: "push",
+  search: {
+    trip: "oneway",
+    from: "DEL",
+    to: "BOM",
+    date: "2026-10-03",
+    travellers: 1,
+    cabin: "Economy",
+  },
+  otp: { mobile: "", timer: 0, resends: 0, tick: null },
+};
+
+function saveSession() {
+  if (store.session) localStorage.setItem("yatra.session", JSON.stringify(store.session));
+  else localStorage.removeItem("yatra.session");
+}
+function saveBooking() {
+  localStorage.setItem("yatra.bookingState", JSON.stringify(store.bookingState));
+}
+
+function booking() {
+  const b = structuredClone(store.data.booking);
+  const s = store.bookingState;
+  if (s?.status === "Cancelled") {
+    b.status = "Cancelled";
+    b.cancellation.cancellable = false;
+    b.refund = s.refund;
+  }
+  return b;
+}
+
+function isMagicMobile(n) {
+  const d = String(n).replace(/\D/g, "");
+  return store.data.auth.magicMobiles.includes(d);
+}
+
+function toast(msg) {
+  const el = $("#toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove("show"), 2400);
+}
+
+function go(hash, dir = "push") {
+  store.navDir = dir;
+  if (location.hash === hash) render();
+  else location.hash = hash;
+}
+
+function back() {
+  store.navDir = "back";
+  if (history.length > 1) history.back();
+  else go("#/home", "back");
+}
+
+function requireAuth(next) {
+  if (store.session) return false;
+  sessionStorage.setItem("yatra.next", next);
+  return true;
+}
+
+function clock() {
+  const d = new Date();
+  const t = d.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: false });
+  const el = $("#clock");
+  if (el) el.textContent = t;
+}
+
+function iconBtn(name, action, label) {
+  return `<button class="icon-btn" data-act="${action}" aria-label="${label || name}">${ICONS[name]}</button>`;
+}
+
+function navBar(title, extra = "") {
+  return `<div class="nav">
+    ${iconBtn("back", "back", "Back")}
+    <div class="title">${title}</div>
+    ${extra}
+  </div>`;
+}
+
+function sheet(html) {
+  const wrap = document.createElement("div");
+  wrap.className = "sheet-bg";
+  wrap.innerHTML = `<div class="sheet"><div class="handle"></div>${html}</div>`;
+  wrap.addEventListener("click", (e) => {
+    if (e.target === wrap) wrap.remove();
+  });
+  $("#phone").appendChild(wrap);
+  return wrap;
+}
+
+function closeSheets() {
+  $$(".sheet-bg").forEach((n) => n.remove());
+}
+
+function productIcon(p) {
+  return `<button class="prod" data-go="#/search/${p.id}">
+    <span class="blob">${ICONS[p.icon] || ICONS.plane}</span>
+    <span>${p.label}</span>
+  </button>`;
+}
+
+function screenClass() {
+  return store.navDir === "back" ? "screen back" : "screen";
+}
