@@ -1,0 +1,19 @@
+{
+  "name": "Yatra",
+  "short_name": "Yatra",
+  "description": "Flights, Hotels, Cabs & Buses",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EA2330",
+  "theme_color": "#EA2330",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

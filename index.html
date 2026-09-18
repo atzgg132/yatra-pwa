@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Yatra" />
+  <meta name="theme-color" content="#EA2330" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Yatra</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+  <link rel="apple-touch-icon" href="assets/icons/icon.svg" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <div class="stage">
+    <div class="phone" id="phone">
+      <div class="statusbar" id="statusbar">
+        <span id="clock">9:41</span>
+        <span class="sig">
+          <span class="dotbar"><i></i><i></i><i></i><i></i></span>
+          <span class="bat"><b></b></span>
+        </span>
+      </div>
+      <div class="app" id="app"></div>
+      <nav class="tabbar hidden" id="tabbar"></nav>
+      <div class="toast" id="toast"></div>
+      <div class="splash" id="splash">
+        <img src="assets/yatra-logo.svg" alt="Yatra" />
+      </div>
+    </div>
+  </div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
