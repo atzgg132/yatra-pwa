@@ -195,7 +195,7 @@ function viewOtp() {
           <span class="wait" id="otp-wait">Resend OTP in 0:30</span>
           <button type="button" class="go hidden" id="otp-resend">Resend OTP</button>
         </div>
-        <button type="button" class="go hidden" id="otp-call" style="margin:-8px 0 16px;font-size:13px;font-weight:700;color:var(--red)">Get OTP on call</button>
+        <button type="button" class="hidden" id="otp-call" style="margin:-8px 0 16px;font-size:13px;font-weight:700;color:var(--red)">Get OTP on call</button>
         <button class="btn btn-red" id="verify" type="submit">Verify OTP</button>
       </form>
     </div>
@@ -757,7 +757,7 @@ function renderTabs(active) {
 }
 
 function bind() {
-  $("#app").onclick = (e) => {
+  $("#phone").onclick = (e) => {
     const actEl = e.target.closest("[data-act]");
     const goEl = e.target.closest("[data-go]");
     const copyEl = e.target.closest("[data-copy]");
