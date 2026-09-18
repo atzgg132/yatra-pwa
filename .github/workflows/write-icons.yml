@@ -1,24 +1,10 @@
+# Disabled. PNG icons are already in the repo. Auto-decode on push
+# failed repeatedly (missing files / bad base64) and emailed on every commit.
 name: Write PWA PNG icons
 on:
-  push:
-    branches: [main]
-permissions:
-  contents: write
+  workflow_dispatch:
 jobs:
-  icons:
+  skip:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Decode PNG icons
-        run: python3 scripts/write-icons.py
-      - name: Commit if needed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apple-touch-icon.png assets/icons/*.png
-          if git diff --cached --quiet; then
-            echo "icons already present"
-          else
-            git commit -m "Add PNG icons for iOS Add to Home Screen"
-            git push
-          fi
+      - run: echo "Icons already committed. This workflow does not run on push."
